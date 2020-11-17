@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import "./App.css";
 import 'firebase/firestore';
 import 'firebase/auth';
+import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -16,6 +17,16 @@ firebase.initializeApp({
   messagingSenderId: "431091618442",
   appId: "1:431091618442:web:5c31d5c7580185c6055373"
 });
+
+// Configure FirebaseUI.
+const uiConfig = {
+  // Popup signin flow rather than redirect flow.
+  signInFlow: 'popup',
+  // We will display Google and Facebook as auth providers.
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+  ]
+};
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
@@ -65,7 +76,7 @@ export function ChatRoom() {
         <span ref={dummy}></span>
       </main>
 
-      <form onSubmit={sendMessage}>
+      <form className="message-form" onSubmit={sendMessage}>
         <input value={formValue} onChange={e => setFormValue(e.target.value)} placeholder="Say something nice" />
 
         <button type="submit" disabled={!formValue}>✈️</button>
@@ -75,16 +86,10 @@ export function ChatRoom() {
 }
 
 function SignIn() {
-
-  function signInWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  }
-
   return (
     <>
-      <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
-      <p>Do not violate the community guidelines or you will be banned for life!</p>
+      <FirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
+      <p className="community-warning">Do not violate the community guidelines or you will be banned for life!</p>
     </>
   );
 }
