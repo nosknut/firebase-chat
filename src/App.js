@@ -45,33 +45,11 @@ function ChatMessage({ message }) {
   );
 }
 
-/*
-function onNewMessage(messageRef, cb) {
-  useEffect(() => {
-    messageRef.onSnapshot(snapshot => {
-      const changes = snapshot.docChanges();
-      if (changes.length === 1) {
-        const doc = changes[0];
-        if (doc.type === "added") {
-          const data = doc.doc.data();
-          if (data.uid !== auth.currentUser.uid) {
-            cb();
-          }
-        }
-      }
-    });
-  }, [messageRef]);
-}
-*/
-
 export function ChatRoom() {
   const dummy = useRef();
 
-  const [[messageRef, query]] = useState(() => {
-    const messageRef = firestore.collection('messages');
-    const query = messageRef.orderBy('createdAt').limit(25);
-    return [messageRef, query];
-  });
+  const messageRef = firestore.collection('messages');
+  const query = messageRef.orderBy('createdAt').limit(25);
 
   const [messages] = useCollectionData(query, { idField: 'id' });
 
