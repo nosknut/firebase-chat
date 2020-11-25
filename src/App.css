@@ -30,7 +30,7 @@ body {
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
-  background-color: rgb(40, 37, 53);
+  background-color: #282c34;
 }
 
 main {
@@ -67,15 +67,18 @@ main::-webkit-scrollbar-thumb {
 
 .message-form button {
   width: 20%;
-  background-color: rgb(56, 56, 143);
+  background-color: #181717;
 }
 
+button:enabled:hover {
+  background-color: #201f1f;
+}
 
 input {
   line-height: 1.5;
   width: 100%;
   font-size: 1.5rem;
-  background: rgb(58, 58, 58);
+  background:#323741;
   color: white;
   outline: none;
   border: none;
@@ -83,7 +86,7 @@ input {
 }
 
 button {
-  background-color: #282c34; /* Green */
+  background-color: #282c34;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -95,7 +98,7 @@ button {
 }
 
 button:disabled {
-  opacity: 0.5;
+  background-color: #323741;
   cursor: not-allowed;
 }
 
@@ -107,8 +110,9 @@ button:disabled {
   margin: 0 auto;
 }
 
-
-
+.sign-out {
+  border-radius: 10px;
+}
 
 ul, li {
   text-align: left;
@@ -157,4 +161,47 @@ img {
   text-align: center;
   width: 100%;
   max-width: 100%;
+}
+
+.rooms-list {
+  padding: 0;
+  margin: -10px;
+}
+
+.rooms-list li {
+  padding: 10px 10px;
+}
+
+.rooms-list li:hover {
+  background-color: #393e49;
+}
+
+.rooms-list li:not(:last-child) {
+  border-bottom: 1px #1b1f24 solid;
+}
+
+.room-link {
+  color: rgb(190, 190, 190);
+  display: block;
+  text-decoration: none;
+  font-size: 30px;
+}
+
+.room-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.go-back {
+  color: white;
+  font-size: 20px;
+  width: 50px;
+  text-decoration: none;
+}
+
+.add-user-btn {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left: 20px;
+  border-radius: 25px;
 }

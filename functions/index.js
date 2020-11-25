@@ -7,7 +7,7 @@ admin.initializeApp();
 const db = admin.firestore();
 
 exports.detectEvilUsers = functions.firestore
-    .document('messages/{msgId}')
+    .document('chatRooms/{roomId}/messages/{msgId}')
     .onCreate(async (doc, ctx) => {
 
         const filter = new Filter();

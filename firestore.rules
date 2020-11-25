@@ -5,20 +5,32 @@ service cloud.firestore {
       allow read, write: if false;
     }
     
-    match /messages/{docId} {
-    	allow read: if request.auth.uid != null;
-      allow create: if canCreateMessage();
-    }
-    
-    function canCreateMessage() {
-    	let isSignedIn = request.auth.uid != null;
-      let isOwner = request.auth.uid == request.resource.data.uid;
-      
-      let isNotBanned = exists(
-      /databases/$(database)/documents/banned/$(request.auth.uid)
-      ) == false;
-      
-      return isSignedIn && isOwner && isNotBanned;
+    match /chatRooms/{roomId} {
+      allow read, create;
+      allow update: if resource.data.createdBy == request.auth.uid;
+
+      match /users/{userId} {
+        allow read;
+        allow create: if exists(/databases/$(database)/documents/chatRooms/$(roomId)/users/$(request.auth.id));
+        allow create, delete: if request.auth.uid == get(/databases/$(database)/documents/chatRooms/$(roomId)).data.createdBy;
+        allow update, delete: if request.auth.uid == userId;
+      }
+
+      match /messages/{docId} {
+        allow read: if request.auth.uid != null;
+        allow create: if canCreateMessage();
+      }
+
+      function canCreateMessage() {
+        let isSignedIn = request.auth.uid != null;
+        let isOwner = request.auth.uid == request.resource.data.uid;
+
+        let isNotBanned = exists(
+        /databases/$(database)/documents/chatRooms/$(roomId)/banned/$(request.auth.uid)
+        ) == false;
+
+        return isSignedIn && isOwner && isNotBanned;
+      }
     }
   }
 }
