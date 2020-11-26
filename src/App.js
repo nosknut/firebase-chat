@@ -7,7 +7,7 @@ import FirebaseAuth from 'react-firebaseui/FirebaseAuth';
 
 import { useCollectionData, useDocumentData, useDocumentDataOnce, useDocumentOnce } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { BrowserRouter as Router, Link, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Redirect, Route, useHistory } from 'react-router-dom';
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
