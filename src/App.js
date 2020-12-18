@@ -154,7 +154,7 @@ export function ChatRoom(props) {
         </header>
         <section>
           <main>
-            {messages && messages.map((msg) => <ChatMessage
+            {messages && messages.reverse().map((msg) => <ChatMessage
               key={msg.id}
               message={msg}
             />

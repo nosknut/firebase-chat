@@ -13,7 +13,7 @@ service cloud.firestore {
         allow read;
         allow create: if exists(/databases/$(database)/documents/chatRooms/$(roomId)/users/$(request.auth.id));
         allow create, delete: if request.auth.uid == get(/databases/$(database)/documents/chatRooms/$(roomId)).data.createdBy;
-        allow update, delete: if request.auth.uid == userId;
+        allow create, update, delete: if request.auth.uid == userId;
       }
 
       match /messages/{docId} {
